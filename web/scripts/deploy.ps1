@@ -16,11 +16,25 @@ if ($major -lt 18) {
   Write-Error "当前 Node $(node -v)，需要 18 或更高版本。"
 }
 
-Write-Host "安装依赖…"
-if (Test-Path "package-lock.json") {
-  npm ci
+if (-not $env:NPM_REGISTRY) { $env:NPM_REGISTRY = "https://registry.npmmirror.com" }
+if ($env:NODE_OPTIONS) {
+  $env:NODE_OPTIONS = "--dns-result-order=ipv4first $($env:NODE_OPTIONS)"
 } else {
-  npm install
+  $env:NODE_OPTIONS = "--dns-result-order=ipv4first"
+}
+$env:NO_UPDATE_NOTIFIER = "1"
+$env:npm_config_audit = "false"
+$env:npm_config_fund = "false"
+$env:npm_config_update_notifier = "false"
+$env:npm_config_fetch_retries = "5"
+$env:npm_config_fetch_timeout = "120000"
+
+Write-Host "安装依赖…"
+Write-Host "镜像：$($env:NPM_REGISTRY)"
+if (Test-Path "package-lock.json") {
+  npm ci --registry $env:NPM_REGISTRY --no-audit --no-fund --loglevel=http
+} else {
+  npm install --registry $env:NPM_REGISTRY --no-audit --no-fund --loglevel=http
 }
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 

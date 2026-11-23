@@ -20,11 +20,25 @@ if [ "$NODE_MAJOR" -lt 18 ]; then
   exit 1
 fi
 
+# 阿里云访问 registry.npmjs.org 经常停在转圈。默认走国内镜像，并优先 IPv4。
+NPM_REGISTRY="${NPM_REGISTRY:-https://registry.npmmirror.com}"
+export NODE_OPTIONS="--dns-result-order=ipv4first${NODE_OPTIONS:+ $NODE_OPTIONS}"
+export NO_UPDATE_NOTIFIER=1
+export npm_config_audit=false
+export npm_config_fund=false
+export npm_config_update_notifier=false
+export npm_config_fetch_retries=5
+export npm_config_fetch_retry_mintimeout=10000
+export npm_config_fetch_retry_maxtimeout=60000
+export npm_config_fetch_timeout=120000
+
 echo "安装依赖…"
+echo "镜像：${NPM_REGISTRY}"
+echo "下面会逐条打印下载记录。超过一分钟没有任何输出，再按 Ctrl+C。"
 if [ -f package-lock.json ]; then
-  npm ci
+  npm ci --registry "$NPM_REGISTRY" --no-audit --no-fund --loglevel=http
 else
-  npm install
+  npm install --registry "$NPM_REGISTRY" --no-audit --no-fund --loglevel=http
 fi
 
 echo "构建前端…"
