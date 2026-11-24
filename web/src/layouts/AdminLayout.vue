@@ -2,11 +2,8 @@
   <div class="shell">
     <aside class="sider" :class="{ open: menuOpen }">
       <div class="brand">
-        <img src="/favicon.svg" alt="" />
-        <div>
-          <strong>学习强国</strong>
-          <span>广告投放管理后台</span>
-        </div>
+        <img :src="logoUrl" alt="学习强国 强国运动" />
+        <span>广告投放管理后台</span>
       </div>
       <nav>
         <section v-for="group in groups" :key="group.label">
@@ -87,6 +84,7 @@ import dayjs from 'dayjs';
 import { fetchPage } from '@/api/http';
 import { resources } from '@/modules/resources';
 import { useUserStore } from '@/stores/user';
+import logoUrl from '@/assets/logo.png';
 
 const route = useRoute();
 const router = useRouter();
@@ -213,13 +211,22 @@ onUnmounted(() => {
 }
 .brand {
   display: flex;
-  gap: 10px;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
   padding: 22px 18px 16px;
 }
-.brand img { width: 36px; height: 36px; }
-.brand strong { display: block; font-size: 14px; }
-.brand span { display: block; margin-top: 2px; color: #8d8084; font-size: 12px; }
+.brand img {
+  display: block;
+  width: 168px;
+  height: auto;
+}
+.brand span {
+  display: block;
+  color: #8d8084;
+  font-size: 13px;
+  line-height: 1.4;
+}
 nav { flex: 1; overflow: auto; padding: 6px 12px 12px; }
 .group {
   width: 100%;

@@ -3,6 +3,7 @@
     <div class="panel">
       <section class="brand">
         <div class="brand-copy">
+          <img class="logo" :src="logoUrl" alt="学习强国 强国运动" />
           <p class="kicker">学习强国【强国运动】</p>
           <h1>广告投放管理后台</h1>
           <i class="bar"></i>
@@ -55,6 +56,7 @@ import { onMounted, reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { http } from '@/api/http';
 import { useToastStore, useUserStore } from '@/stores/user';
+import logoUrl from '@/assets/logo.png';
 
 const router = useRouter();
 const route = useRoute();
@@ -133,6 +135,12 @@ onMounted(loadCaptcha);
   display: flex;
   align-items: center;
   padding: 48px 8% 72px;
+}
+.logo {
+  display: block;
+  width: min(460px, 100%);
+  height: auto;
+  margin: 0 0 64px;
 }
 .kicker {
   margin: 0 0 18px;
