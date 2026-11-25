@@ -70,7 +70,7 @@
       </div>
     </div>
 
-    <div v-if="editing" class="mask" @click.self="editing = false">
+    <div v-if="editing" class="mask">
       <div class="dialog" role="dialog">
         <h3>{{ form.id ? '编辑' : '新建' }}{{ config.title }}</h3>
         <p class="sub">带星号的字段为必填</p>
@@ -101,7 +101,7 @@
       </div>
     </div>
 
-    <div v-if="viewing" class="mask" @click.self="viewing = null">
+    <div v-if="viewing" class="mask">
       <div class="dialog" role="dialog">
         <h3>{{ config.title }}详情</h3>
         <div class="detail">
@@ -116,7 +116,7 @@
       </div>
     </div>
 
-    <div v-if="pendingDelete" class="mask" @click.self="pendingDelete = null">
+    <div v-if="pendingDelete" class="mask">
       <div class="confirm">
         <h3>确认删除</h3>
         <p>删除后不可恢复，确定删除这条记录吗？</p>

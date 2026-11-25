@@ -95,7 +95,7 @@
       </div>
     </div>
 
-    <div v-if="current" class="mask" @click.self="current = null">
+    <div v-if="current" class="mask">
       <div class="dialog">
         <h3>{{ current.name }}</h3>
         <p class="sub">{{ current.account }} · 计划 {{ current.id }}</p>
